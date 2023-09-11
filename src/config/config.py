@@ -5,6 +5,9 @@ from pymongo import MongoClient
 cluster = MongoClient(os.getenv('MONGO_URL'))
 db = cluster[os.getenv('APPLICATION_NAME') + '_DATA_HOUSE']
 
+# collections
+users_collection = db['Users']
+
 # SETTING UP MAIL CONFIGURATION
 mail_config = {
     'MAIL_SERVER': 'smtp.gmail.com',

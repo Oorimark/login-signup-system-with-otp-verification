@@ -1,8 +1,14 @@
 FOLDER SETUP/CONFIGURATIONS
-    ☐ Set up folder Architecture
-    ☐ Set environmental variables
-    ☐ Set up entry file (index.py)
-    ☐ Wrote endponts for client login and client signup
+    ✔ Set up folder Architecture @done (9/10/2023, 5:29:51 PM)
+    ✔ Set environmental variables @done (9/10/2023, 5:29:55 PM)
+    ✔ Set up entry file (index.py) @done (9/10/2023, 5:29:57 PM)
+    ✔ Wrote endponts for client login and client signup @done (9/10/2023, 5:30:00 PM)
+
+CONFIGURATION AND MODELLING OF MAIL AND DATABASE
+    ✔ Configuration of mail service @done (9/10/2023, 5:30:04 PM)
+    ✔ Configuration of database (mongo db) @done (9/10/2023, 5:30:09 PM)
+    ✔ Setting up mail in application file (App.py) @done (9/10/2023, 5:30:12 PM)
+    ✔ Modelling database @done (9/10/2023, 5:30:14 PM)
 
 BUGS/ISSUES
     None
