@@ -1,3 +1,4 @@
+import logging
 from flask import Flask
 from config.config import mail_config
 from flask_mail import Mail
@@ -13,3 +14,11 @@ app.config = mail_config
 
 # setting up mail
 mail: Mail = Mail(app)
+
+# setting up logger
+logging_configuration = {
+    'level': logging.DEBUG,
+    'format': "%(asctime)s %{levelname}s %(message)s",
+    'datefmt': "%Y-%m-%d %H:%M:%S",
+    'filename': 'application_service_log.log',
+}

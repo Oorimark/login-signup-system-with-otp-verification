@@ -1,8 +1,9 @@
 import os
 from pymongo import MongoClient
 
+local_mongodb = 'mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb'
 # SETTING UP DATABASE CONNECTION
-cluster = MongoClient(os.getenv('MONGO_URL'))
+cluster = MongoClient(os.getenv('MONGO_URL') | local_mongodb)
 db = cluster[os.getenv('APPLICATION_NAME') + '_DATA_HOUSE']
 
 # collections

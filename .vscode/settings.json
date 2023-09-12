@@ -3,6 +3,7 @@
     "dotenv",
     "gbtmsvxjxbhpoekf",
     "jsonify",
+    "levelname",
     "pymongo"
   ]
 }
