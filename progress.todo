@@ -10,5 +10,9 @@ CONFIGURATION AND MODELLING OF MAIL AND DATABASE
     ✔ Setting up mail in application file (App.py) @done (9/10/2023, 5:30:12 PM)
     ✔ Modelling database @done (9/10/2023, 5:30:14 PM)
 
+WRITING TESTS AND USING DEPENDENCY LIBRARIES
+    ☐ Write unit test for the database model
+    ☐ Using pymongo library
+
 BUGS/ISSUES
-    None
+    ☐ Probems with loading environmental variables using python-dotenv module

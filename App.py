@@ -1,10 +1,12 @@
 import logging
 from flask import Flask
+from flask_cors import CORS
 from config.config import mail_config
 from flask_mail import Mail
 from api.v1 import api_v1
 
 app: Flask = Flask(__name__)
+CORS(app)
 
 # registering blueprint
 app.register_blueprint(api_v1)
