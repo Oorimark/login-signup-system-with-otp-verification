@@ -4,6 +4,7 @@
     "gbtmsvxjxbhpoekf",
     "jsonify",
     "levelname",
-    "pymongo"
+    "pymongo",
+    "werkzeug"
   ]
 }

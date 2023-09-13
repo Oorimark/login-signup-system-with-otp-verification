@@ -1,18 +1,21 @@
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import generate_password_hash
 
 """ DATABASE COLLECTION MODELS """
-class Database_Model:
+class DatabaseModel:
     def __init__(self, collection):
         self.collection = collection
     def __insert(self, data: dict):
         match(self.collection.__name__):
             case 'user_collection':
-                data = User_Collection_Schema.pre('insert', data)
+                data = UserCollectionSchema.pre('insert', data)
         self.collection.insert_one(data)
     def __delete_one(self, id: str):
         self.collection.delete_one({"_id": id})
+    def __find_one(self, credential: dict):
+        """ find an item based on the credential """
+        self.collection.find_one(credential)
 
-class User_Collection_Schema:
+class UserCollectionSchema:
     def pre(self, action, data):
         """ middlewares to be used with model actions """
         match(action):
