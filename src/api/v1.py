@@ -17,8 +17,17 @@ def client_login():
    # 2. send a session token and the user id so the client can access
    auth_client_res = auth_client_credential(request.json)
    if auth_client_res.valid:
-      return jsonify({'data': {'res': {'id': auth_client_res.id}}})
-   return jsonify({'data': {'err': 'user credential is invalid'}})
+      return jsonify({
+         'data': {
+            'res': {'id': auth_client_res.id}
+         }
+      }), 200
+
+   return jsonify({
+      'data': {
+         'err': 'user credential is invalid'
+      }
+   }), 400
 
 """ send client otp route """
 @api_v1.route('/send_otp', methods=['POST'])
@@ -34,6 +43,12 @@ def send_client_otp():
       title='An OTP Verification is sent', 
       sender_msg=otp_service.prepare_otp_package_for_mailing()
    )
+
+   return jsonify({
+      'data': {
+         'res': 'sent successfully'
+      }
+   }), 200
 
 """ validate client otp route """
 @api_v1.route('/validate_otp', methods=['POST'])
