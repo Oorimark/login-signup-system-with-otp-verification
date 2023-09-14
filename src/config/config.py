@@ -8,7 +8,7 @@ cluster = MongoClient(os.getenv('MONGO_URL') or local_mongodb)
 db = cluster[os.getenv('APPLICATION_NAME') or 'DLSOS' + '_DATA_HOUSE']
 
 # collections
-users_collection = db['Users']
+userCollection = db['Users']
 
 # SETTING UP MAIL CONFIGURATION
 mail_config = {
