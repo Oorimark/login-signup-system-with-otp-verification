@@ -1,5 +1,9 @@
+# Read the api docs for more examples: https://postman.com/login-2u3b29b2
+
 from flask import Blueprint, jsonify, request
 from middleware.middleware import validate_client_middleware, validate_client_login_credentials, validate_client_signup_credentials
+from model.database.db import DatabaseModel
+from config.config import userCollection, clientMessagingCollection
 from services.auth.auth import auth_client_credential
 from services.mail.mail_service import send_mail
 from services.otp.otp_service import OTP_SERVICE
@@ -7,62 +11,123 @@ from services.otp.otp_service import OTP_SERVICE
 # version 1 blueprint
 api_v1 = Blueprint('v1_route', __name__, url_prefix = '/api/v1')
 
-""" client login route """
 @api_v1.route('/client_login', methods=['POST'])
 @validate_client_middleware
 @validate_client_login_credentials
 def client_login():
-   # PROCESS
-   # 1. check if password for the username (email) exist
-   # 2. send a session token and the user id so the client can access
+   """ Client login route: Login route """
+
+   # auth client credentials
    auth_client_res = auth_client_credential(request.json)
    if auth_client_res.valid:
       return jsonify({
          'data': {
-            'res': {'id': auth_client_res.id}
+            'res': {
+               'id': auth_client_res.id
+            }
          }
       }), 200
-
+   # auth client is invalid
    return jsonify({
       'data': {
          'err': 'user credential is invalid'
       }
-   }), 400
+   }), 404
 
-""" send client otp route """
 @api_v1.route('/send_otp', methods=['POST'])
 @validate_client_middleware
 def send_client_otp():
-   client_email = request.json['email']
+   """ Send client OTP route: Sends otp to a specified mail """
 
+   client_email = request.json['email']
    otp_service = OTP_SERVICE()
    otp_service.create_otp_package()
+   try:
+      send_mail(
+         rcpt_email=client_email, 
+         title='An OTP Verification is sent', 
+         sender_msg=otp_service.prepare_otp_package_for_mailing()
+      )
+   except Exception as e:
+      return jsonify({
+         'data': {
+            'err': f'mail was not sent. + {e}'
+         }
+      }), 500
+   else: 
+      return jsonify({
+         'data': {
+            'res': 'sent successfully'
+         }
+      }), 200
 
-   send_mail(
-      rcpt_email=client_email, 
-      title='An OTP Verification is sent', 
-      sender_msg=otp_service.prepare_otp_package_for_mailing()
-   )
-
-   return jsonify({
-      'data': {
-         'res': 'sent successfully'
-      }
-   }), 200
-
-""" validate client otp route """
 @api_v1.route('/validate_otp', methods=['POST'])
 @validate_client_middleware
 @validate_client_signup_credentials
 def validate_client_otp():
-   # 1. send otp to the email from client
-   client_otp = request.json('otp')
-   ...
+   """ Validate client otp route """
 
-""" client sign up route """
+   client_otp = request.json('otp')
+   if OTP_SERVICE().validate_otp(client_otp):
+      return jsonify({
+         'data': {
+            'res': 'otp is valid'
+         }
+      }), 200
+   # client otp is not valid
+   return jsonify({
+      'data': {
+         'err': 'invalid client otp'
+      }
+   }), 404
+
 @api_v1.route('/sign_up', methods=['POST'])
 @validate_client_middleware
 @validate_client_signup_credentials
 def client_signup():
-   # 1. send otp to the email from client
-   ...
+   """ Client sign up route """
+
+   user_collection = DatabaseModel(userCollection)
+   try:
+      user_collection.insert(request.json)
+   except Exception as e:
+      return jsonify({
+         'data': {
+            'err': f'error inserting to database. {e}'
+         }
+      }), 500
+   else:
+      return jsonify({
+         'data': {
+            'res': 'account have been created'
+         }
+      }), 200
+      
+@api_v1.route('/client_messaging_channel', methods=['POST', 'GET'])
+@validate_client_middleware
+def client_messaging_channel():
+   """ Client Messaging channel """
+
+   if request.methods == 'POST':
+      messaging_collection = DatabaseModel(clientMessagingCollection)
+      try:
+         messaging_collection.insert(request.json)
+      except Exception as e:
+         return jsonify({
+            'data': {
+               'err': f'error inserting to database. {e}'
+            }
+         }), 500
+      else:
+         return jsonify({
+            'data': {
+               'res': 'message sent'
+            }
+         }), 200
+   else:
+      # request method is get
+      ...
+
+      
+      
+      

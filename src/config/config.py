@@ -9,6 +9,7 @@ db = cluster[os.getenv('APPLICATION_NAME') or 'DLSOS' + '_DATA_HOUSE']
 
 # collections
 userCollection = db['Users']
+clientMessagingCollection = db['MessageCollection']
 
 # SETTING UP MAIL CONFIGURATION
 mail_config = {

@@ -1,5 +1,5 @@
 import logging
-from App import app, logging_configuration
+from app import app, logging_configuration
 from waitress import serve
 
 # set up logging for entry file

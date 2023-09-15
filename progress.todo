@@ -15,9 +15,15 @@ WRITING TESTS AND USING DEPENDENCY LIBRARIES
     ☐ Test the pymongo library
 
 LOGIN AND SIGN UP OPERATIONS, COMPLETING OTP PROCESS AND SETTNG UP MAIL SENDING
-    ☐ Set up operation involving login in the /client_login route
-    ☐ Write utility function for authenticating client credential
-    ☐ Create functin for sending mail
+    ✔ Set up operation involving login in the /client_login route @done (9/14/2023, 8:44:49 PM)
+    ✔ Write utility function for authenticating client credential @done (9/14/2023, 8:44:35 PM)
+    ✔ Create function for sending mail @done (9/14/2023, 8:44:42 PM)
+
+VALIDATE OTP ROUTE, SIGN UP ROUTE AND DOC STRINGS
+    ✔ Write validate otp logic and operations @done (9/14/2023, 8:45:14 PM)
+    ✔ Write operations to be done with signing up @done (9/14/2023, 8:45:16 PM)
+    ✔ Write doc string for easy readability @done (9/14/2023, 8:45:28 PM)
+    ☐ Clean up code
 
 BUGS/ISSUES
     ☐ Probems with loading environmental variables using python-dotenv module

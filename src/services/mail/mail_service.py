@@ -1,5 +1,5 @@
 from flask_mail import Message
-from App import app, mail
+from app import app, mail
 
 def send_mail(rcpt_email: str, title: str, sender_msg: str):
     with app.app_context():
