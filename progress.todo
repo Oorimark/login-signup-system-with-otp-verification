@@ -23,7 +23,12 @@ VALIDATE OTP ROUTE, SIGN UP ROUTE AND DOC STRINGS
     ✔ Write validate otp logic and operations @done (9/14/2023, 8:45:14 PM)
     ✔ Write operations to be done with signing up @done (9/14/2023, 8:45:16 PM)
     ✔ Write doc string for easy readability @done (9/14/2023, 8:45:28 PM)
-    ☐ Clean up code
+    ✔ Clean up code @done (9/15/2023, 4:21:11 PM)
+
+DESIN AND WRITE CLIENT MESSAGING ROUTE
+    ✔ Draw a sketch for the client messaging process (src: ./resources/doc_assets/} @done (9/15/2023, 4:23:42 PM)
+    ✔ Implemented the messaging route @done (9/15/2023, 4:23:44 PM)
+    ✔ Implemented workers for the messaging process @done (9/15/2023, 4:23:47 PM)
 
 BUGS/ISSUES
     ☐ Probems with loading environmental variables using python-dotenv module
