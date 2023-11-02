@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 from middleware.middleware import validate_client_middleware, validate_client_login_credentials, validate_client_signup_credentials
-from model.database.db import DatabaseModel
+from model.database.db import DatabaseModel, ClientMessagingCollectionWorker
 from config.config import userCollection, clientMessagingCollection
 from services.auth.auth import auth_client_credential
 from services.mail.mail_service import send_mail
@@ -111,7 +111,7 @@ def client_messaging_channel():
    if request.methods == 'POST':
       messaging_collection = DatabaseModel(clientMessagingCollection)
       try:
-         messaging_collection.insert(request.json)
+         messaging_collection.insert(request.json, 'client_messaging_collection')
       except Exception as e:
          return jsonify({
             'data': {
@@ -125,8 +125,27 @@ def client_messaging_channel():
             }
          }), 200
    else:
-      # request method is get
-      ...
+      # request is get method
+      try:
+         client_messaging_worker = ClientMessagingCollectionWorker(request.json)
+      except Exception as e:
+         return jsonify({
+            'data': {
+               'err': 'client messaging worker is not active'
+            }
+         })
+      else:
+         client_messaging_worker.search_messages()
+         client_messaging_worker.sort_searched_messages()
+         messages = client_messaging_worker.trim_search_messages
+         return jsonify({
+            'data': {
+               'res': {
+                  'messages': messages,
+               }
+            }
+         }), 200
+      
 
       
       
