@@ -7,5 +7,12 @@
     "levelname",
     "pymongo",
     "werkzeug"
-  ]
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none",
+  "python.testing.unittestArgs": ["-v", "-s", "./__test__", "-p", "*test.py"],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true
 }

@@ -12,12 +12,12 @@ CORS(app)
 app.register_blueprint(api_v1)
 
 # configuring mail with app
-app.config = mail_config
+# app.config = mail_config
 
 # setting up mail
 mail: Mail = Mail(app)
 
-# setting up logger
+# # setting up logger
 logging_configuration = {
     'level': logging.DEBUG,
     'format': "%(asctime)s %{levelname}s %(message)s",

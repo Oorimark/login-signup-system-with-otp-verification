@@ -3,7 +3,7 @@ from app import app, logging_configuration
 from waitress import serve
 
 # set up logging for entry file
-logging.basicConfig(**logging_configuration)
+# logging.basicConfig(**logging_configuration)
 
 # Application Run Mode
 mode = "dev"

@@ -2,6 +2,7 @@ import os
 from pymongo import MongoClient
 
 local_mongodb = 'mongodb://127.0.0.1:27017/'
+connection_string = f"mongodb+srv://{os.getenv('DB_CONNECTION_USERNAME')}:{os.getenv('DB_CONNECTION_PASSWORD')}@cluster0.xcz3g.mongodb.net/?retryWrites=true&w=majority"
 
 # SETTING UP DATABASE CONNECTION
 cluster = MongoClient(os.getenv('MONGO_URL') or local_mongodb)
