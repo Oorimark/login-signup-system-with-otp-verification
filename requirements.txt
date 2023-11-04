@@ -41,7 +41,7 @@ pyinstaller-hooks-contrib==2023.3
 pymongo==4.5.0
 pyparsing==3.0.9
 pypiwin32==223
-python-dotenv==1.0.0
+python-dotenv==0.21.1 #1.0.0
 pywin32==306
 pywin32-ctypes==0.2.0
 requests==2.31.0
