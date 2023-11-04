@@ -25,7 +25,7 @@ class OTP_SERVICE:
 
     def create_otp_package(self) -> None:
         timestamp: datetime.time = datetime.now()
-        otp: int = self.generate_otp()
+        otp: int = self.otp
         self.otp_package: dict = {
             'timestamp': (timestamp.isoformat()), 'otp': otp}
         self.otp_service_storage_worker_instance.save_data(self.otp_package)
@@ -56,9 +56,6 @@ class OTP_SERVICE_STORAGE_WORKER:
             return json.loads(data) if data else data
 
     def write_file(self, updated_content):
-
-        # print(type(json.dumps(updated_content)))
-
         with open(self.file_name, 'w') as db:
             print(type(updated_content))
             db.write(json.dumps(updated_content, indent=5))
@@ -69,15 +66,15 @@ class OTP_SERVICE_STORAGE_WORKER:
         self.write_file(db)  # update db
 
     def delete_data(self, otp: int):
-        db = json.loads(self.read_file())
+        db = self.read_file()
         updated_content = filter(lambda data: data['otp'] != otp, db)
         new_updated_content_bucket = list()
         for content in updated_content:
             new_updated_content_bucket.append(content)
-        self.write_file(json.dumps(new_updated_content_bucket))
+        self.write_file(new_updated_content_bucket)
 
     def find_otp(self, otp: int) -> None | dict:
-        db = json.loads(self.read_file())
+        db = self.read_file()
         for data in db:
             if data['otp'] == otp:
                 return data

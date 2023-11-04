@@ -11,10 +11,8 @@ mail = Mail(app)
 
 def send_mail(rcpt_email: str, title: str, sender_msg: str):
     with app.app_context():
-        print('--- init mail ---')
         msg = Message(title,
                       sender='markpublicm@gmail.com',
                       recipients=[rcpt_email])
         msg.body = sender_msg
         mail.send(msg)
-        print('--- end mail ---')

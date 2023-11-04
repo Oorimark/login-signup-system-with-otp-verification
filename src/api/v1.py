@@ -47,7 +47,6 @@ def send_client_otp():
     client_email = request.json['email']
 
     otp_service = OTP_SERVICE()
-    print(otp_service.prepare_otp_package_for_mailing())
     try:
         send_mail(
             rcpt_email=client_email,
@@ -73,8 +72,11 @@ def send_client_otp():
 @validate_client_middleware
 def validate_client_otp():
     """ Validate client otp route """
-    client_otp = request.json('otp')
-    if OTP_SERVICE().validate_otp(client_otp):
+    client_otp = request.json['otp']
+    otp_service = OTP_SERVICE()
+
+    if otp_service.validate_otp(client_otp):
+        otp_service.delete_otp(client_otp)
         return jsonify({
             'data': {
                 'res': 'otp is valid'
