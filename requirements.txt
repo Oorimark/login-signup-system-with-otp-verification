@@ -47,7 +47,7 @@ pywin32-ctypes==0.2.0
 requests==2.31.0
 urllib3==2.0.4
 virtualenv==20.23.1
-Werkzeug==2.3.7
+Werkzeug==2.2.3
 whichcraft==0.6.1
 zope.event==4.6
 zope.interface==6.0
