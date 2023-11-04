@@ -12,12 +12,10 @@ class DatabaseModel:
 
     def insert(self, data: dict):
         # using middlewares with their associated collection
-        match(self.collection_name):
-            case 'user-collection':
-                data_with_hash_pwd = UserCollectionMIddlewaresFactory().pre(
-                    'insert', data)
-            case 'clientMessagingCollection':
-                ...
+        if self.collection_name == 'user-collection':
+            data_with_hash_pwd = UserCollectionMIddlewaresFactory().pre(
+                'insert', data
+            )
         self.collection.insert_one(data_with_hash_pwd)
 
     def __delete_one(self, id: str):
@@ -31,20 +29,18 @@ class DatabaseModel:
 class UserCollectionMIddlewaresFactory:
     def pre(self, action, data):
         """ middlewares to be used with model actions """
-        match(action):
-            case 'insert':
-                data['password'] = generate_password_hash(data['password'])
-                print(data)
-                return data
+        if action == 'insert':
+            data['password'] = generate_password_hash(data['password'])
+            print(data)
+            return data
 
 
 class ClientMessagingMiddlewaresFactory:
     def pre(self, action, data):
         """ middlewares to be used with model actions """
-        match(action):
-            case 'insert':
-                data['time_stamp'] = datetime.now()
-                return data
+        if action == 'insert':
+            data['time_stamp'] = datetime.now()
+            return data
 
 
 class ClientMessagingCollectionWorker:
