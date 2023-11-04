@@ -73,7 +73,7 @@ class OTP_SERVICE_STORAGE_WORKER:
             new_updated_content_bucket.append(content)
         self.write_file(new_updated_content_bucket)
 
-    def find_otp(self, otp: int) -> None | dict:
+    def find_otp(self, otp: int) -> dict:
         db = self.read_file()
         for data in db:
             if data['otp'] == otp:
