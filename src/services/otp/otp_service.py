@@ -7,21 +7,24 @@ from datetime import datetime
 class OTP_SERVICE:
     def __init__(self):
         self.otp_service_storage_worker_instance = OTP_SERVICE_STORAGE_WORKER()
+        self.otp = self.generate_otp()
 
     def generate_otp(self) -> int:
         # Magic numbers are not important
         max_salt_value: int = 5
         ref_values: str = '0123456789'
+
         salt: int = randint(2, max_salt_value)
         char_string = list(ref_values)
         shuffle(char_string)
         shuffled_string = ''.join(char_string)
         otp = int(shuffled_string[:4] * salt)
-        self.otp = otp
+
+        self.otp = str(otp)[:6]
         return str(otp)[:6]
 
     def create_otp_package(self) -> None:
-        timestamp: datetime.time = datetime.now().time()
+        timestamp: datetime.time = datetime.now()
         otp: int = self.generate_otp()
         self.otp_package: dict = {
             'timestamp': (timestamp.isoformat()), 'otp': otp}

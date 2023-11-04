@@ -45,8 +45,9 @@ def client_login():
 def send_client_otp():
     """ Send client OTP route: Sends otp to a specified mail """
     client_email = request.json['email']
+
     otp_service = OTP_SERVICE()
-    otp_service.create_otp_package()
+    print(otp_service.prepare_otp_package_for_mailing())
     try:
         send_mail(
             rcpt_email=client_email,
@@ -56,10 +57,11 @@ def send_client_otp():
     except Exception as e:
         return jsonify({
             'data': {
-                'err': f'mail was not sent. + {e}'
+                'err': f'mail was not sent. {e}'
             }
         }), 500
     else:
+        otp_service.create_otp_package()
         return jsonify({
             'data': {
                 'res': 'sent successfully'
