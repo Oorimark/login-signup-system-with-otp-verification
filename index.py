@@ -6,7 +6,7 @@ from waitress import serve
 # logging.basicConfig(**logging_configuration)
 
 # Application Run Mode
-mode = "dev"
+mode = "prod"
 
 if __name__ == "__main__":
     match mode:
