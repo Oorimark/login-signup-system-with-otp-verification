@@ -6,24 +6,26 @@ from src.config.config import clientMessagingCollection
 
 
 class DatabaseModel:
-    def __init__(self, collection):
+    def __init__(self, collection, collection_name):
         self.collection = collection
+        self.collection_name = collection_name
 
     def insert(self, data: dict):
         # using middlewares with their associated collection
-        match(self.collection.__name__):
-            case 'userCollection':
-                data = UserCollectionMIddlewaresFactory.pre('insert', data)
+        match(self.collection_name):
+            case 'user-collection':
+                data_with_hash_pwd = UserCollectionMIddlewaresFactory().pre(
+                    'insert', data)
             case 'clientMessagingCollection':
                 ...
-        self.collection.insert_one(data)
+        self.collection.insert_one(data_with_hash_pwd)
 
     def __delete_one(self, id: str):
         self.collection.delete_one({"_id": id})
 
-    def __find_one(self, credential: dict):
+    def find_one(self, credential: dict):
         """ find an item based on the credential """
-        self.collection.find_one(credential)
+        return self.collection.find_one(credential)
 
 
 class UserCollectionMIddlewaresFactory:
@@ -31,7 +33,8 @@ class UserCollectionMIddlewaresFactory:
         """ middlewares to be used with model actions """
         match(action):
             case 'insert':
-                data.password = generate_password_hash(data.password)
+                data['password'] = generate_password_hash(data['password'])
+                print(data)
                 return data
 
 

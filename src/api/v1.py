@@ -19,17 +19,16 @@ def loopback_test():
 
 @api_v1.route('/client_login', methods=['POST'])
 @validate_client_middleware
-# @validate_client_login_credentials
+@validate_client_login_credentials
 def client_login():
     """ Client login route: Login route """
     # auth client credentials
-    print('client login')
     auth_client_res = auth_client_credential(request.json)
-    if auth_client_res.valid:
+    if auth_client_res['valid']:
         return jsonify({
             'data': {
                 'res': {
-                    'id': auth_client_res.id
+                    'id': str(auth_client_res['id'])
                 }
             }
         }), 200
@@ -70,7 +69,6 @@ def send_client_otp():
 
 @api_v1.route('/validate_otp', methods=['POST'])
 @validate_client_middleware
-@validate_client_signup_credentials
 def validate_client_otp():
     """ Validate client otp route """
     client_otp = request.json('otp')
@@ -88,14 +86,34 @@ def validate_client_otp():
     }), 404
 
 
+@api_v1.route('/check_client_email', methods=['POST'])
+@validate_client_middleware
+def check_client_email():
+    """ Checks if email address already exist"""
+    userCollectionModel = DatabaseModel(userCollection, 'user-collection')
+    find_res = userCollectionModel.find_one(request.json)
+    if find_res:
+        return jsonify({
+            'data': {
+                'res': True
+            }
+        }), 200
+    # client email doesn't exist
+    return jsonify({
+        'data': {
+            'res': False
+        }
+    }), 200
+
+
 @api_v1.route('/sign_up', methods=['POST'])
 @validate_client_middleware
 @validate_client_signup_credentials
 def client_signup():
     """ Client sign up route """
-    user_collection = DatabaseModel(userCollection)
+    userCollectionModel = DatabaseModel(userCollection, 'user-collection')
     try:
-        user_collection.insert(request.json)
+        userCollectionModel.insert(request.json)
     except Exception as e:
         return jsonify({
             'data': {

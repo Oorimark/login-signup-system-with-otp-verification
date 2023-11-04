@@ -23,9 +23,8 @@ def validate_client_login_credentials(f):
     def wrapper(*args, **kwargs):
         print(request.json)
         required_credentials: list[str] = ['email', 'password']
-        for credential in request.json:
-            if not credential in required_credentials:
-                return jsonify({'data': {'err': f'{credential} is not provided.'}})
+        if not list(request.json.keys()) == required_credentials:
+            return jsonify({'data': {'err': f'Required keys(s) is not provided. Please read the documentation'}}), 404
         return f(*args, **kwargs)
     return wrapper
 
@@ -35,8 +34,7 @@ def validate_client_signup_credentials(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         required_credentials: list[str] = ['name', 'email', 'password']
-        for credential in request.json:
-            if not credential in required_credentials:
-                return jsonify({'data': {'err': f'{credential} is not provided.'}})
+        if not list(request.json.keys()) == required_credentials:
+            return jsonify({'data': {'err': f'Required key(s) is not provided. Please read the documentation'}}), 404
         return f(*args, **kwargs)
     return wrapper
