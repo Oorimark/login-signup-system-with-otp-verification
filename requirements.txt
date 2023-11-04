@@ -9,7 +9,7 @@ charset-normalizer==3.2.0
 click==8.1.7
 colorama==0.4.6
 distlib==0.3.6
-dnspython==2.4.2
+dnspython==2.3.0
 docutils==0.20.1
 Eel==0.16.0
 filelock==3.12.2
