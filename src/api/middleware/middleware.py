@@ -33,7 +33,8 @@ def validate_client_signup_credentials(f):
     """ validate client login credentials """
     @wraps(f)
     def wrapper(*args, **kwargs):
-        required_credentials: list[str] = ['name', 'email', 'password']
+        required_credentials: list[str] = [
+            'name', 'email', 'department', 'password']
         if not list(request.json.keys()) == required_credentials:
             return jsonify({'data': {'err': f'Required key(s) is not provided. Please read the documentation'}}), 404
         return f(*args, **kwargs)

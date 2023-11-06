@@ -12,7 +12,7 @@ from src.services.otp.otp_service import OTP_SERVICE
 api_v1 = Blueprint('v1_route', __name__, url_prefix='/api/v1')
 
 
-@api_v1.route('api_loopback_test')
+@api_v1.route('/api_loopback_test', methods=['POST', 'GET'])
 def loopback_test():
     return 'API VERSION 1 IS RUNNING'
 
