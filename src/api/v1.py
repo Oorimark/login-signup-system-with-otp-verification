@@ -112,7 +112,7 @@ def check_client_email():
 
 @api_v1.route('/sign_up', methods=['POST'])
 @validate_client_middleware
-@validate_client_signup_credentials
+# @validate_client_signup_credentials # ! disabled so it is compatible with different clients
 def client_signup():
     """ Client sign up route """
     userCollectionModel = DatabaseModel(userCollection, 'user-collection')
