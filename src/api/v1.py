@@ -139,8 +139,7 @@ def client_messaging_channel():
         messaging_collection = DatabaseModel(
             clientMessagingCollection, 'client-messaging-collection')
         try:
-            messaging_collection.insert(
-                request.json, 'client_messaging_collection')
+            messaging_collection.insert(request.json)
         except Exception as e:
             return jsonify({
                 'data': {

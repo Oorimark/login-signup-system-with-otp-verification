@@ -10,8 +10,6 @@ def validate_client_middleware(f):
     """ validates the clients using a access secret key """
     @wraps(f)
     def wrapper(*args, **kwargs):
-        print(os.getenv('ACCESS_SECRET_KEY'))
-
         client_access_secret_key = request.headers.get('Client-Access-Key')
         if client_access_secret_key == os.getenv('ACCESS_SECRET_KEY'):
             return f(*args, **kwargs)
@@ -23,7 +21,6 @@ def validate_client_login_credentials(f):
     """ validate client login credentials """
     @wraps(f)
     def wrapper(*args, **kwargs):
-        print(request.json)
         required_credentials: list[str] = ['email', 'password']
         if not list(request.json.keys()) == required_credentials:
             return jsonify({'data': {'err': f'Required keys(s) is not provided. Please read the documentation'}}), 404

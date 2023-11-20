@@ -13,12 +13,12 @@ class DatabaseModel:
     def insert(self, data: dict):
         # using middlewares with their associated collection
         if self.collection_name == 'user-collection':
-            data_with_hash_pwd = UserCollectionMIddlewaresFactory().pre(
+            data = UserCollectionMIddlewaresFactory().pre(
                 'insert', data
             )
         elif self.collection_name == 'client-messaging-collection':
             ...
-        self.collection.insert_one(data_with_hash_pwd)
+        self.collection.insert_one(data)
 
     def __delete_one(self, id: str):
         self.collection.delete_one({"_id": id})
