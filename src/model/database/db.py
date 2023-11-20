@@ -16,6 +16,8 @@ class DatabaseModel:
             data_with_hash_pwd = UserCollectionMIddlewaresFactory().pre(
                 'insert', data
             )
+        elif self.collection_name == 'client-messaging-collection':
+            ...
         self.collection.insert_one(data_with_hash_pwd)
 
     def __delete_one(self, id: str):
@@ -31,7 +33,6 @@ class UserCollectionMIddlewaresFactory:
         """ middlewares to be used with model actions """
         if action == 'insert':
             data['password'] = generate_password_hash(data['password'])
-            print(data)
             return data
 
 

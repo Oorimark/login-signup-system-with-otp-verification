@@ -10,6 +10,8 @@ def validate_client_middleware(f):
     """ validates the clients using a access secret key """
     @wraps(f)
     def wrapper(*args, **kwargs):
+        print(os.getenv('ACCESS_SECRET_KEY'))
+
         client_access_secret_key = request.headers.get('Client-Access-Key')
         if client_access_secret_key == os.getenv('ACCESS_SECRET_KEY'):
             return f(*args, **kwargs)

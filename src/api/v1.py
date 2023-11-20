@@ -135,8 +135,9 @@ def client_signup():
 @validate_client_middleware
 def client_messaging_channel():
     """ Client Messaging channel """
-    if request.methods == 'POST':
-        messaging_collection = DatabaseModel(clientMessagingCollection)
+    if request.method == 'POST':
+        messaging_collection = DatabaseModel(
+            clientMessagingCollection, 'client-messaging-collection')
         try:
             messaging_collection.insert(
                 request.json, 'client_messaging_collection')
