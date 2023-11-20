@@ -162,7 +162,7 @@ def client_messaging_channel():
                 'data': {
                     'err': 'client messaging worker is not active'
                 }
-            })
+            }), 500
         else:
             client_messaging_worker.search_messages()
             client_messaging_worker.sort_searched_messages()
