@@ -27,7 +27,9 @@ class OTP_SERVICE:
         timestamp: datetime.time = datetime.now()
         otp: int = self.otp
         self.otp_package: dict = {
-            'timestamp': (timestamp.isoformat()), 'otp': otp}
+            'timestamp': (timestamp.isoformat()),
+            'otp': otp
+        }
         self.otp_service_storage_worker_instance.save_data(self.otp_package)
 
     def validate_otp(self, otp: int):

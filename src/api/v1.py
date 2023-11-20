@@ -44,9 +44,8 @@ def client_login():
 @validate_client_middleware
 def send_client_otp():
     """ Send client OTP route: Sends otp to a specified mail """
-    client_email = request.json['email']
-
     otp_service = OTP_SERVICE()
+    client_email = request.json['email']
     try:
         send_mail(
             rcpt_email=client_email,
@@ -72,8 +71,8 @@ def send_client_otp():
 @validate_client_middleware
 def validate_client_otp():
     """ Validate client otp route """
-    client_otp = request.json['otp']
     otp_service = OTP_SERVICE()
+    client_otp = request.json['otp']
 
     if otp_service.validate_otp(client_otp):
         otp_service.delete_otp(client_otp)
