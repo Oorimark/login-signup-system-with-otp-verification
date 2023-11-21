@@ -8,7 +8,7 @@ def date_adapter(date: str):
     splitted_date = clean_date.split('T')
     date, time_ = splitted_date
     year, month, day = [int(el) for el in date.split('-')]
-    hour, minute, second = [int(el) for el in time_.split(':')]
+    hour, minute, __ = [int(el) for el in time_.split(':')]
 
     specified_date = datetime(year, month, day)
     specified_time = time(hour, minute)
