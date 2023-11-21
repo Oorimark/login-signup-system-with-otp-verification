@@ -3,6 +3,7 @@ from pprint import pprint
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 from src.config.config import clientMessagingCollection
+from src.util.util import date_adapter
 
 """ DATABASE COLLECTION MODELS """
 
@@ -28,9 +29,11 @@ class DatabaseModel:
             search_res = self.find_one(queryIDs)
 
             if search_res:
-                print('Searched Res: ', dict(search_res))
+                data = ClientMessagingCollectionWorker().pre(
+                    'update', data['chat'][0])
+
                 previous_chats = dict(search_res)['chats']
-                new_chats = [*previous_chats, *data['chats']]
+                new_chats = [*previous_chats, data]
                 self.update_one(queryIDs, {'chats': new_chats})
                 return
             else:
@@ -61,6 +64,8 @@ class ClientMessagingMiddlewaresFactory:
             data['timeStamp'] = datetime.now()
             return data
         elif action == 'update':
+            data['timeStamp'] = datetime.now()
+            return data
             ...
 
 
@@ -81,4 +86,7 @@ class ClientMessagingCollectionWorker:
 
     def trim_search_messages(self):
         """ cuts messages length based on the previous client messages length """
-        return self.searched_res[self.prev_client_messages:]
+        transformed_last_message_time = date_adapter(self.last_message_time)
+        for idx, chat in enumerate(self.current_chats):
+            if chat['timeStamp'] > transformed_last_message_time:
+                return self.current_chats[idx:]
