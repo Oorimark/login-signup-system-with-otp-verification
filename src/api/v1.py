@@ -161,13 +161,12 @@ def client_messaging_channel():
         except Exception as e:
             return jsonify({
                 'data': {
-                    'err': 'client messaging worker is not active'
+                    'err': f'client messaging worker is not working. {e}'
                 }
             }), 500
         else:
             client_messaging_worker.search_messages()
-            return "something"
-            messages = client_messaging_worker.trim_search_messages
+            messages = client_messaging_worker.trim_search_messages()
             return jsonify({
                 'data': {
                     'res': {

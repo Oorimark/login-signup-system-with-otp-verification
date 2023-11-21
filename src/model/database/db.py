@@ -29,15 +29,17 @@ class DatabaseModel:
             search_res = self.find_one(queryIDs)
 
             if search_res:
-                data = ClientMessagingCollectionWorker().pre(
-                    'update', data['chat'][0])
+                data = ClientMessagingMiddlewaresFactory().pre(
+                    'update', data['chats'][0])
 
                 previous_chats = dict(search_res)['chats']
                 new_chats = [*previous_chats, data]
                 self.update_one(queryIDs, {'chats': new_chats})
                 return
             else:
-                data = ClientMessagingMiddlewaresFactory().pre('insert', data)
+                updated_chats = ClientMessagingMiddlewaresFactory().pre(
+                    'insert', data['chats'][0])
+                data['chats'] = [updated_chats]
 
         self.collection.insert_one(data)
 
@@ -66,27 +68,26 @@ class ClientMessagingMiddlewaresFactory:
         elif action == 'update':
             data['timeStamp'] = datetime.now()
             return data
-            ...
 
 
 class ClientMessagingCollectionWorker:
     collection = clientMessagingCollection
 
-    def __init__(self, get_request_params):
-        self.last_message_time = get_request_params['lastMessagingTime']
-        del get_request_params['lastClientMessage']
-
-        self.search_params = get_request_params
+    def __init__(self, request_params):
+        self.last_message_time = request_params['lastMessagingTime']
+        del request_params['lastMessagingTime']
+        self.search_params = request_params
 
     def search_messages(self):
         search_res = self.collection.find(self.search_params)
         self.current_chats = list(search_res)[0]['chats']
 
-        print(self.current_chats)
-
     def trim_search_messages(self):
         """ cuts messages length based on the previous client messages length """
         transformed_last_message_time = date_adapter(self.last_message_time)
+
         for idx, chat in enumerate(self.current_chats):
             if chat['timeStamp'] > transformed_last_message_time:
+                pprint(self.current_chats[idx:])
                 return self.current_chats[idx:]
+        return []
