@@ -9,6 +9,8 @@ load_dotenv()
 
 connection_string = f"mongodb+srv://{os.getenv('DB_CONNECTION_USERNAME')}:{os.getenv('DB_CONNECTION_PASSWORD')}@cluster0.xcz3g.mongodb.net/?retryWrites=true&w=majority"
 
+# local_connection_string = "mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb"
+
 try:
     cluster = MongoClient(connection_string)
 except Exception as e:

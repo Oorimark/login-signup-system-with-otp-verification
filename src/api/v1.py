@@ -138,6 +138,7 @@ def client_messaging_channel():
     if request.method == 'POST':
         messaging_collection = DatabaseModel(
             clientMessagingCollection, 'client-messaging-collection')
+
         try:
             messaging_collection.insert(request.json)
         except Exception as e:
@@ -165,7 +166,7 @@ def client_messaging_channel():
             }), 500
         else:
             client_messaging_worker.search_messages()
-            client_messaging_worker.sort_searched_messages()
+            return "something"
             messages = client_messaging_worker.trim_search_messages
             return jsonify({
                 'data': {
