@@ -1,3 +1,0 @@
-class SendRequestError(Exception):
-    """ Raise error when the sending request anchor is not available or not ready """
-    ...

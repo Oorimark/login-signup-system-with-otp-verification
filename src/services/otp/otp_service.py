@@ -1,4 +1,5 @@
 """ OTP Service script """
+
 import json
 from random import randint, shuffle
 from datetime import datetime
@@ -13,8 +14,8 @@ class OTP_SERVICE:
         # Magic numbers are not important
         max_salt_value: int = 5
         ref_values: str = '0123456789'
-
         salt: int = randint(2, max_salt_value)
+
         char_string = list(ref_values)
         shuffle(char_string)
         shuffled_string = ''.join(char_string)

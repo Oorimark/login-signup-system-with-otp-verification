@@ -11,8 +11,8 @@ def auth_client_credential(credentials: dict):
 
     userCollectionModel = DatabaseModel(userCollection, 'user-collection')
     user_credentials = userCollectionModel.find_one({'email': email})
-
     user_id, __, __, user_hashed_pwd = user_credentials.values()  # id, email, name, pwd
+
     if check_password_hash(user_hashed_pwd, pwd):
         return {'valid': True, 'id': user_id}
     return {'valid': False}

@@ -15,12 +15,12 @@ try:
     cluster = MongoClient(connection_string)
 except Exception as e:
     print('MongoClient is not connected to mongo url')
+else:
+    db = cluster[os.getenv('APP_NAME') + '_DATA_HOUSE']
 
-db = cluster[os.getenv('APP_NAME') + '_DATA_HOUSE']
-
-# collections
-userCollection = db['Users']
-clientMessagingCollection = db['MessageCollection']
+    # collections
+    userCollection = db['Users']
+    clientMessagingCollection = db['MessageCollection']
 
 """ SETTING UP MAIL CONFIGURATION """
 

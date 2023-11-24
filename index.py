@@ -2,9 +2,6 @@ import logging
 from app import app
 from waitress import serve
 
-# set up logging for entry file
-# logging.basicConfig(**logging_configuration)
-
 # Application Run Mode
 mode = "prod"
 

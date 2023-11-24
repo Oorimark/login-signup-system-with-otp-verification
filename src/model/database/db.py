@@ -1,4 +1,3 @@
-import json
 from pprint import pprint
 from datetime import datetime
 from werkzeug.security import generate_password_hash
