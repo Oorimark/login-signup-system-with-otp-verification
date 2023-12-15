@@ -47,7 +47,7 @@ class OTP_SERVICE:
 class OTP_SERVICE_STORAGE_WORKER:
     """ OTP SERVICE STORAGE WORKER: store pending otp """
 
-    file_name = 'pending_otp.db'
+    file_name = 'pending_otp.json'
 
     def __init__(self):
         if not (self.read_file()):
