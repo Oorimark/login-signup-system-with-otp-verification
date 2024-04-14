@@ -132,12 +132,13 @@ def client_messaging_channel():
 
 @api_v1.route("/send_email", methods=["POST"])
 def send_email_endpoint():
+    sender = request.json["sender"]
     recpt_email = request.json["email"]
     msg = request.json["msg"]
     title = request.json["title"]
 
     try:
-        send_mail(recpt_email, title, msg)
-        return jsonify({"res": "Success"})
+        send_mail(sender, recpt_email, title, msg)
+        return jsonify({"res": "Success"}), 200
     except:
-        return jsonify({"err": "Unable to send mail"})
+        return jsonify({"err": "Unable to send mail"}), 400

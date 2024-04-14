@@ -8,10 +8,8 @@ app.config.from_object(MAIL_CONFIG)
 mail = Mail(app)
 
 
-def send_mail(rcpt_email: str, title: str, sender_msg: str):
+def send_mail(sender: str, rcpt_email: str, title: str, sender_msg: str):
     with app.app_context():
-        msg = Message(title,
-                      sender='markpublicm@gmail.com',
-                      recipients=[rcpt_email])
+        msg = Message(title, sender=sender, recipients=[rcpt_email])
         msg.body = sender_msg
         mail.send(msg)
